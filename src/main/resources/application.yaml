@@ -1,0 +1,38 @@
+server:
+  port: 8091
+  servlet:
+    session:
+      cookie:
+        same-site: strict
+
+spring:
+  application:
+    name: auth-module
+
+  security:
+    user:
+      name: admin
+      password: admin
+
+  datasource:
+    url:  jdbc:postgresql://localhost:5432/cck_auth_db?ssl=false&currentSchema=public
+    username: postgres
+    password: Deneth#@1234
+    driver-class-name:  org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto:  update
+#      ddl-auto:  create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://eureka:eureka@localhost:8761/eureka
+#    register-with-eureka: true
+#    fetch-registry: true
