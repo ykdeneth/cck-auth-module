@@ -21,7 +21,7 @@ public class Permissions {
     @Column(nullable = false, name = "permission_name")
     private String permission;
 
-    @OneToMany(mappedBy = "permissions")
+    @OneToMany(mappedBy = "permissions",  fetch = FetchType.EAGER)
     private Set<RolesPermissions> userPermissions;
 
     @Override

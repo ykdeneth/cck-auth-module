@@ -23,10 +23,10 @@ public class Roles {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "roles",  fetch = FetchType.EAGER)
     private Set<UserRole> userRoles;
 
-    @OneToMany(mappedBy = "roles")
+    @OneToMany(mappedBy = "roles",  fetch = FetchType.EAGER)
     private Set<RolesPermissions> roles;
 
     public Roles() {

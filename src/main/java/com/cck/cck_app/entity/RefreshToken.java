@@ -19,7 +19,7 @@ public class RefreshToken {
     @Column(length = 512, nullable = false, unique = true)
     private String token;
 
-    @Column(name = "expiry_date", nullable = false)
+    @Column(name = "expired", nullable = false)
     private boolean expired;
 
     @Column(name = "revoked", nullable = false)

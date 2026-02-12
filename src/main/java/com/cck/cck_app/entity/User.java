@@ -38,7 +38,7 @@ public class User {
     @Column(nullable = false)
     private String mobile;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles;
 
     @OneToMany(

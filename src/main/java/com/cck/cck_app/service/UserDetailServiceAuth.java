@@ -33,10 +33,11 @@ public class UserDetailServiceAuth implements UserDetailsService {
         return new UserPrinciple(user);
     }
 
-    public String storeRefreshToken(String rfToken, UserDetails userDetails) {
+    public String storeRefreshToken(String rfToken, String username) {
+        User user =  userRepo.findByUsername(username);
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setToken(String.valueOf(rfToken));
-        refreshToken.setUser((User) userDetails);
+        refreshToken.setUser(user);
         refreshToken.setRevoked(false);
         refreshToken.setExpired(false);
 

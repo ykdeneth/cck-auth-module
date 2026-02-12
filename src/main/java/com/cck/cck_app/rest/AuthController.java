@@ -62,7 +62,7 @@ public class AuthController {
         response.setStatus("Login-success");
         response.setToken(jwt);
         response.setRefreshToken(refreshToken);
-        userDetailService.storeRefreshToken(refreshToken, userDetails);
+        userDetailService.storeRefreshToken(refreshToken, loginRequest.getUsername());
 
         return ResponseEntity.ok(response);
     }
@@ -83,6 +83,7 @@ public class AuthController {
             storedToken.get().setRevoked(true);
             storedToken.get().setExpired(true);
             refreshTokenRepository.save(storedToken.get());
+            System.out.println("logout success");
         }
 
         return ResponseEntity.ok("Logged out successfully");
