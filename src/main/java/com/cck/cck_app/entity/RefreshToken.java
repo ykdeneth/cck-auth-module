@@ -20,7 +20,10 @@ public class RefreshToken {
     private String token;
 
     @Column(name = "expiry_date", nullable = false)
-    private LocalDateTime expiryDate;
+    private boolean expired;
+
+    @Column(name = "revoked", nullable = false)
+    private boolean revoked;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

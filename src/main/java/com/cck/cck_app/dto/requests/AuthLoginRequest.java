@@ -1,4 +1,4 @@
-package com.cck.cck_app.dto;
+package com.cck.cck_app.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

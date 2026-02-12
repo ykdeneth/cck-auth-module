@@ -1,12 +1,9 @@
-package com.cck.cck_app.dto;
+package com.cck.cck_app.dto.requests;
 
-import com.cck.cck_app.entity.Roles;
-import com.cck.cck_app.entity.UserRole;
 import lombok.Data;
 
 
 import java.util.Set;
-import java.util.UUID;
 
 @Data
 public class AuthRegisterRequest {

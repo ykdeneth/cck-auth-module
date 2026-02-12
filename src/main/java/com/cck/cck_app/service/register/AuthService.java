@@ -1,9 +1,11 @@
 package com.cck.cck_app.service.register;
 
-import com.cck.cck_app.dto.AuthRegisterRequest;
+import com.cck.cck_app.dto.requests.AuthRegisterRequest;
 import com.cck.cck_app.entity.Roles;
 import com.cck.cck_app.entity.User;
 import com.cck.cck_app.entity.UserRole;
+import com.cck.cck_app.exceptions.AlreadyExists;
+import com.cck.cck_app.exceptions.UserNotFoundException;
 import com.cck.cck_app.repo.RolesRepo;
 import com.cck.cck_app.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,23 +37,20 @@ public class AuthService {
 
         User authUser = new User();
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already exists");
+            throw new AlreadyExists("Username already exists");
         }
         if(request.getRoles()==null || request.getRoles().isEmpty()) {
-            throw new RuntimeException("Roles cannot be empty");
-//            authUser.setUserRoles(new);
+            throw new IllegalArgumentException("Roles cannot be empty");
         }
 
 
         authUser.setUser_id(UUID.randomUUID());
         authUser.setUsername(request.getUsername());
         authUser.setPassword(passwordEncoder.encode(request.getPassword()));
-
-//        Set<String> roleNames = request.getRoles();
-//        authUser.setUserRoles(request.getRoles());
         authUser.setStatus(true);
         authUser.setMobile(request.getMobile());
         authUser.setCreatedAt(LocalDateTime.now());
+
         Set<UserRole> userRoles = new HashSet<>();
         for (var roleSet : request.getRoles()) {
             Roles roleEntity = rolesRepo.findByRoleName(roleSet != null ? roleSet : "USER")
@@ -63,18 +62,18 @@ public class AuthService {
             userRoles.add(userRole);
         }
         authUser.setUserRoles(userRoles);
-        // Save credentials
+
       return userRepository.save(authUser);
 
 }
     private void validateMobile(String mobile) {
 
         if (mobile == null || mobile.isBlank()) {
-            throw new RuntimeException("Mobile number is required");
+            throw new IllegalArgumentException("Mobile number is required");
         }
 
         if (!mobile.matches("^[0-9]{10}$")) {
-            throw new RuntimeException("Mobile number must contain exactly 10 digits");
+            throw new IllegalArgumentException("Mobile number must contain exactly 10 digits");
         }
     }
 
