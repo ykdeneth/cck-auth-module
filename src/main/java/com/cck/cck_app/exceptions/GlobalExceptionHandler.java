@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 //        assert ex != null;
         ErrorResponse error = new ErrorResponse(
                 status.value(),
-                ex != null ? ex.getMessage() : null
+                ex != null ? ex.getMessage() : "null"
         );
 
         return new ResponseEntity<>(error, status);
