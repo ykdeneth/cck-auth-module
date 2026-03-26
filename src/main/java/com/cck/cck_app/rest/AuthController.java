@@ -5,6 +5,7 @@ import com.cck.cck_app.dto.requests.AuthRegisterRequest;
 import com.cck.cck_app.dto.response.JwtResponse;
 import com.cck.cck_app.dto.response.RegisterResponse;
 import com.cck.cck_app.entity.User;
+import com.cck.cck_app.entity.model.UserPrinciple;
 import com.cck.cck_app.repo.RefreshTokenRepository;
 import com.cck.cck_app.service.UserDetailServiceAuth;
 import com.cck.cck_app.service.register.AuthService;
@@ -55,14 +56,19 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
-        UserDetails userDetails = userDetailService.loadUserByUsername(loginRequest.getUsername());
+//        UserDetails userDetails = userDetailService.loadUserByUsername(loginRequest.getUsername());
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String jwt = jwtUtil.generateToken(userDetails);
         String refreshToken = jwtUtil.generateRefreshToken(userDetails);
         JwtResponse response = new JwtResponse();
         response.setStatus("Login-success");
         response.setToken(jwt);
         response.setRefreshToken(refreshToken);
-        userDetailService.storeRefreshToken(refreshToken, loginRequest.getUsername());
+
+        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        User user = userPrinciple.getUser();
+
+        userDetailService.storeRefreshToken(refreshToken, user);
 
         return ResponseEntity.ok(response);
     }

@@ -80,4 +80,8 @@ public Collection<? extends GrantedAuthority> getAuthorities() {
 //        return UserDetails.super.isEnabled();
         return true;
     }
+
+    public User getUser() {
+        return user;
+    }
 }
